@@ -41,10 +41,8 @@ void fill_samples()
     }
 }
 
-void app_main(void)
+void spi_257_32(void *p)
 {
-    logic_analyzer_ws_server(); // internal Logic Analyzer // remove
-
     esp_err_t ret;
     spi_device_handle_t spi;
     spi_bus_config_t buscfg = {
@@ -80,4 +78,11 @@ void app_main(void)
         ret = spi_device_transmit(spi, &t); // Transmit!
         ESP_ERROR_CHECK(ret);               // Should have had no issues.
     }
+
+}
+
+void app_main(void)
+{
+    logic_analyzer_ws_server(); // internal Logic Analyzer // remove
+    xTaskCreatePinnedToCore(spi_257_32,"spi257",4096,NULL,5,NULL,1);
 }
