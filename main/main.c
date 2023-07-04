@@ -11,7 +11,7 @@
 
 #include "logic_analyzer_ws_server.h"
 
-#define LCD_HOST HSPI_HOST
+#define LCD_HOST VSPI_HOST
 
 #define PIN_NUM_MISO -1
 #define PIN_NUM_MOSI 18

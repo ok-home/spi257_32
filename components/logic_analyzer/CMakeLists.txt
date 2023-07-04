@@ -5,7 +5,8 @@ set( srcs
     logic_analyzer_hal/logic_analyzer_hi_interrupt_handler.s
 )
 set( includedir logic_analyzer_hal/include )
-set( require 
+set( priv_includedir logic_analyzer_hal/private_include )
+set( priv_require 
     driver
     protocol_examples_common
     esp_http_server 
@@ -22,6 +23,10 @@ if(CONFIG_ANALYZER_USE_WS)
     list( APPEND includedir 
         logic_analyzer_ws/include 
     )
+    list( APPEND priv_includedir 
+        logic_analyzer_ws/private_include 
+    )
+
     set(embed  
         logic_analyzer_ws/logic_analyzer_ws.html
     )
@@ -39,7 +44,9 @@ endif()
 idf_component_register(
     SRCS ${srcs}
     INCLUDE_DIRS ${includedir}
-    REQUIRES ${require}
+    PRIV_INCLUDE_DIRS ${priv_includedir}
+    #REQUIRES ${require}
+    PRIV_REQUIRES ${priv_require}
     EMBED_FILES ${embed}
 )
 
