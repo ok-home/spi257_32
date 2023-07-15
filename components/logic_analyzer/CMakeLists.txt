@@ -1,9 +1,15 @@
 set( srcs 
-    logic_analyzer_hal/logic_analyzer_triggered_isr_start.c
+
     logic_analyzer_hal/logic_analyzer_hal.c
     logic_analyzer_hal/logic_analyzer_ll.c
-    logic_analyzer_hal/logic_analyzer_hi_interrupt_handler.s
+   
 )
+if(CONFIG_ANALYZER_USE_HI_LEVEL5_INTERRUPT)
+    list( APPEND srcs 
+        logic_analyzer_hal/logic_analyzer_triggered_isr_start.c
+        logic_analyzer_hal/logic_analyzer_hi_interrupt_handler.s 
+        )
+endif()
 set( includedir logic_analyzer_hal/include )
 set( priv_includedir logic_analyzer_hal/private_include )
 set( priv_require 
