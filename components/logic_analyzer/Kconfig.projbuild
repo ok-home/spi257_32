@@ -12,6 +12,14 @@ menu "Logic Analyzer Configuration"
             bool "I2S1"
     endchoice
 
+    if ESP_SYSTEM_CHECK_INT_LEVEL_4
+        config ANALYZER_USE_HI_LEVEL5_INTERRUPT
+            bool "Use HI level5 interrupt"
+            default y
+            help
+                Use HI level5 interrupt.
+    endif
+
     config ANALYZER_SEPARATE_MODE
         bool "Separate mode"
         default n
@@ -140,6 +148,14 @@ menu "Logic Analyzer Configuration"
         default y
         help
             logic analyzer output data to http websocket
+
+    if  ANALYZER_USE_WS
+        config ANALYZER_START_WS_SERVER
+            bool "Start WS server"
+            default y
+            help
+                Start new WS server, or only register_uri_handlers on existing WS server.
+    endif
 
     config ANALYZER_USE_SUMP
             bool "Direct connect to Sizrok PulseView"

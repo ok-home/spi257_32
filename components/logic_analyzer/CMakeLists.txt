@@ -18,7 +18,6 @@ set( priv_require
 if(CONFIG_ANALYZER_USE_WS)
     list( APPEND srcs
         logic_analyzer_ws/logic_analyzer_ws.c
-        logic_analyzer_ws/logic_analyzer_ws_server.c
     )
     list( APPEND includedir 
         logic_analyzer_ws/include 
@@ -26,10 +25,14 @@ if(CONFIG_ANALYZER_USE_WS)
     list( APPEND priv_includedir 
         logic_analyzer_ws/private_include 
     )
-
     set(embed  
         logic_analyzer_ws/logic_analyzer_ws.html
     )
+    if(CONFIG_ANALYZER_START_WS_SERVER)
+        list( APPEND srcs
+            logic_analyzer_ws/logic_analyzer_ws_server.c
+        )
+    endif()
 endif()
 
 if(CONFIG_ANALYZER_USE_SUMP)
@@ -50,6 +53,6 @@ idf_component_register(
     EMBED_FILES ${embed}
 )
 
-if(CONFIG_ESP_SYSTEM_CHECK_INT_LEVEL_4)
+if(CONFIG_ANALYZER_USE_HI_LEVEL5_INTERRUPT)
         target_link_libraries(${COMPONENT_LIB} INTERFACE "-u la_include_hi_interrupt")
 endif()
